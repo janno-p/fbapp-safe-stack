@@ -19,14 +19,25 @@ type Msg =
 | Init of Result<Counter, exn>
 
 
+module Server = 
+
+  open Shared
+  open Fable.Remoting.Client
+  
+  /// A proxy you can use to talk to server directly
+  let api : ICounterProtocol = 
+    Proxy.remoting<ICounterProtocol> {
+      use_route_builder Route.builder
+    }
+    
 
 let init () : Model * Cmd<Msg> =
   let model = None
   let cmd =
-    Cmd.ofPromise 
-      (fetchAs<int> "/api/init") 
-      [] 
-      (Ok >> Init) 
+    Cmd.ofAsync 
+      Server.api.getInitCounter
+      () 
+      (Ok >> Init)
       (Error >> Init)
   model, cmd
 
@@ -50,6 +61,7 @@ let safeComponents =
       "Saturn", "https://saturnframework.github.io/docs/"
       "Fable", "http://fable.io"
       "Elmish", "https://fable-elmish.github.io/"
+      "Fable.Remoting", "https://zaid-ajaj.github.io/Fable.Remoting/"
     ]
     |> List.map (fun (desc,link) -> a [ Href link ] [ str desc ] )
     |> intersperse (str ", ")

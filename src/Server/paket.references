@@ -3,7 +3,7 @@ group Server
 
   Saturn
 
-  Fable.JsonConverter
 
+  Fable.Remoting.Giraffe
 
   Microsoft.DotNet.Watcher.Tools

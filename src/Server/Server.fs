@@ -4,8 +4,8 @@ open System.Threading.Tasks
 open Giraffe
 open Saturn
 
-open Giraffe.Serialization
-open Microsoft.Extensions.DependencyInjection
+open Fable.Remoting.Server
+open Fable.Remoting.Giraffe
 
 open Shared
 
@@ -18,22 +18,17 @@ let browserRouter = scope {
   get "/" (htmlFile (Path.Combine(clientPath, "index.html")))
 }
 
-let config (services:IServiceCollection) =
-  let fableJsonSettings = Newtonsoft.Json.JsonSerializerSettings()
-  fableJsonSettings.Converters.Add(Fable.JsonConverter())
-  services.AddSingleton<IJsonSerializer>(NewtonsoftJsonSerializer fableJsonSettings) |> ignore
-  services
-let apiRouter = scope {
-  get "/init" (fun next ctx ->
-    task {
-      let! counter = getInitCounter()
-      return! Successful.OK counter next ctx
-    })
-}
+let server =
+  { getInitCounter = getInitCounter >> Async.AwaitTask }
+
+let webApp =
+  remoting server {
+    use_route_builder Route.builder
+  }
 
 let mainRouter = scope {
   forward "" browserRouter
-  forward "/api" apiRouter
+  forward "" webApp
 }
 
 let app = application {
@@ -41,7 +36,6 @@ let app = application {
     url ("http://0.0.0.0:" + port.ToString() + "/")
     memory_cache
     use_static clientPath
-    service_config config
     use_gzip
 }
 
