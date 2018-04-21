@@ -4,7 +4,6 @@ open System.Threading.Tasks
 open Giraffe
 open Saturn
 
-open Fable.Remoting.Server
 open Fable.Remoting.Giraffe
 
 open Shared

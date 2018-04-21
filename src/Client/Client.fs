@@ -1,104 +1,23 @@
 module Client
 
-open Elmish
-open Elmish.React
-
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.PowerPack.Fetch
-
+open Fable.Core.JsInterop
+open Fable.Import
 open Shared
 
-
-
-type Model = Counter option
-
-type Msg =
-| Increment
-| Decrement
-| Init of Result<Counter, exn>
-
-
 module Server = 
+    open Fable.Remoting.Client
 
-  open Shared
-  open Fable.Remoting.Client
-  
-  /// A proxy you can use to talk to server directly
-  let api : ICounterProtocol = 
-    Proxy.remoting<ICounterProtocol> {
-      use_route_builder Route.builder
-    }
-    
+    let api : ICounterProtocol = 
+        Proxy.remoting<ICounterProtocol> {
+            use_route_builder Route.builder
+        }
 
-let init () : Model * Cmd<Msg> =
-  let model = None
-  let cmd =
-    Cmd.ofAsync 
-      Server.api.getInitCounter
-      () 
-      (Ok >> Init)
-      (Error >> Init)
-  model, cmd
+let Vue: Vue = importDefault "vue"
 
-let update (msg : Msg) (model : Model) : Model * Cmd<Msg> =
-  let model' =
-    match model,  msg with
-    | Some x, Increment -> Some (x + 1)
-    | Some x, Decrement -> Some (x - 1)
-    | None, Init (Ok x) -> Some x
-    | _ -> None
-  model', Cmd.none
-
-let safeComponents =
-  let intersperse sep ls =
-    List.foldBack (fun x -> function
-      | [] -> [x]
-      | xs -> x::sep::xs) ls []
-
-  let components =
-    [
-      "Saturn", "https://saturnframework.github.io/docs/"
-      "Fable", "http://fable.io"
-      "Elmish", "https://fable-elmish.github.io/"
-      "Fable.Remoting", "https://zaid-ajaj.github.io/Fable.Remoting/"
-    ]
-    |> List.map (fun (desc,link) -> a [ Href link ] [ str desc ] )
-    |> intersperse (str ", ")
-    |> span [ ]
-
-  p [ ]
-    [ strong [] [ str "SAFE Template" ]
-      str " powered by: "
-      components ]
-
-let show = function
-| Some x -> string x
-| None -> "Loading..."
-
-let view (model : Model) (dispatch : Msg -> unit) =
-  div []
-    [ h1 [] [ str "SAFE Template" ]
-      p  [] [ str "The initial counter is fetched from server" ]
-      p  [] [ str "Press buttons to manipulate counter:" ]
-      button [ OnClick (fun _ -> dispatch Decrement) ] [ str "-" ]
-      div [] [ str (show model) ]
-      button [ OnClick (fun _ -> dispatch Increment) ] [ str "+" ]
-      safeComponents ]
-
-  
-#if DEBUG
-open Elmish.Debug
-open Elmish.HMR
-#endif
-
-Program.mkProgram init update view
-#if DEBUG
-|> Program.withConsoleTrace
-|> Program.withHMR
-#endif
-|> Program.withReact "elmish-app"
-#if DEBUG
-|> Program.withDebugger
-#endif
-|> Program.run
+let app = 
+    Vue.Create(
+        createObj [
+            "el" ==> "#app"
+            "render" ==> (fun h -> h "h1" createEmpty<obj> [| "Hello World" |])
+        ]
+    )

@@ -1,9 +1,5 @@
 group Server
-  FSharp.Core
-
-  Saturn
-
-
-  Fable.Remoting.Giraffe
-
-  Microsoft.DotNet.Watcher.Tools
+    Fable.Remoting.Giraffe
+    FSharp.Core
+    Microsoft.DotNet.Watcher.Tools
+    Saturn
