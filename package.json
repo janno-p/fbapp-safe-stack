@@ -3,9 +3,9 @@
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "babel-runtime": "6.26.0",
-    "quasar-framework": "^0.15.10",
     "remotedev": "0.2.7",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "6.26.0",

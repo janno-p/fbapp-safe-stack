@@ -13,11 +13,3 @@ module Server =
         }
 
 let Vue: Vue = importDefault "vue"
-
-let app = 
-    Vue.Create(
-        createObj [
-            "el" ==> "#app"
-            "render" ==> (fun h -> h "h1" createEmpty<obj> [| "Hello World" |])
-        ]
-    )
