@@ -1,23 +1,25 @@
 group Server
-  storage: none
-  source https://api.nuget.org/v3/index.json
+    storage: none
+    source https://api.nuget.org/v3/index.json
 
-  nuget FSharp.Core
-  nuget Saturn
-  nuget Fable.Remoting.Giraffe ~> 2.6
+    nuget Fable.Remoting.Giraffe ~> 2.6
+    nuget FSharp.Core
+    nuget Microsoft.AspNetCore.Antiforgery
+    nuget Microsoft.AspNetCore.Server.Kestrel
+    nuget Saturn
 
-  clitool Microsoft.DotNet.Watcher.Tools
+    clitool Microsoft.DotNet.Watcher.Tools
 
 group Client
-  storage: none
-  source https://api.nuget.org/v3/index.json
+    storage: none
+    source https://api.nuget.org/v3/index.json
 
-  nuget Fable.Core
-  nuget Fable.Remoting.Client ~> 2.4
+    nuget Fable.Core
+    nuget Fable.Remoting.Client ~> 2.4
 
-  clitool dotnet-fable
+    clitool dotnet-fable
 
 group Build
-  source https://api.nuget.org/v3/index.json
+    source https://api.nuget.org/v3/index.json
 
-  nuget FAKE
+    nuget FAKE

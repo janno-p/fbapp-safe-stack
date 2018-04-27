@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HttpExtensions.fs" />
     <Compile Include="..\Shared\Shared.fs" />
     <Compile Include="Server.fs" />
   </ItemGroup>

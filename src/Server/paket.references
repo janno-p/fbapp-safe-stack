@@ -1,5 +1,7 @@
 group Server
     Fable.Remoting.Giraffe
     FSharp.Core
+    Microsoft.AspNetCore.Antiforgery
+    Microsoft.AspNetCore.Server.Kestrel
     Microsoft.DotNet.Watcher.Tools
     Saturn
