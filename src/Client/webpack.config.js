@@ -20,7 +20,7 @@ var babelOptions = fableUtils.resolveBabelOptions({
 
 
 var isProduction = process.argv.indexOf("-p") >= 0;
-var port = process.env.SUAVE_FABLE_PORT || "8085";
+var port = process.env.SUAVE_FABLE_PORT || "5000";
 var mode = isProduction ? "production" : "development";
 console.log("Bundling for " + mode + "...");
 

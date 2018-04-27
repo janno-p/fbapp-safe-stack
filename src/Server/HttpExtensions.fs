@@ -4,14 +4,14 @@ open Microsoft.AspNetCore.Antiforgery
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
 
-module HttpContext =
-    let [<Literal>] XsrfTokenCookieName = "XSRF-TOKEN"
+module XsrfToken =
+    let [<Literal>] CookieName = "XSRF-TOKEN"
 
-    let refreshXsrfToken (context: HttpContext) =
+    let refresh (context: HttpContext) =
         let antiforgery = context.RequestServices.GetRequiredService<IAntiforgery>()
         let tokens = antiforgery.GetAndStoreTokens(context)
-        context.Response.Cookies.Delete XsrfTokenCookieName
-        context.Response.Cookies.Append (XsrfTokenCookieName, tokens.RequestToken, CookieOptions(HttpOnly = true))
+        context.Response.Cookies.Delete CookieName
+        context.Response.Cookies.Append(CookieName, tokens.RequestToken, CookieOptions(HttpOnly = true))
 
 module HttpRequest =
     type RequestData = {

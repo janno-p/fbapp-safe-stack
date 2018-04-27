@@ -5,10 +5,13 @@ group Server
     nuget Fable.Remoting.Giraffe ~> 2.6
     nuget FSharp.Core
     nuget Microsoft.AspNetCore.Antiforgery
+    nuget Microsoft.AspNetCore.Authentication.Google
     nuget Microsoft.AspNetCore.Server.Kestrel
+    nuget Microsoft.Extensions.Configuration.UserSecrets
     nuget Saturn
 
     clitool Microsoft.DotNet.Watcher.Tools
+    clitool Microsoft.Extensions.SecretManager.Tools
 
 group Client
     storage: none
