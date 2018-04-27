@@ -18,6 +18,9 @@ type VNodeData =
     | Slot of string
     | Class of obj
     | Attrs of obj
+    | On of obj
+    | NativeOn of obj
+    | Props of obj
 
 type VNode = obj
 type VNodeChildren = obj

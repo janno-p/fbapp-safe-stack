@@ -19,6 +19,7 @@ let inline button b c = domEl "button" b c
 let inline div b c = domEl "div" b c
 let inline footer b c = domEl "footer" b c
 let inline h1 b c = domEl "h1" b c
+let inline hr b = domEl "hr" b []
 let inline i b c = domEl "i" b c
 let inline li b c = domEl "li" b c
 let inline nav b c = domEl "nav" b c

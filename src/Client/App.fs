@@ -37,7 +37,7 @@ comp.render <-
                                 routerLink [Class "nav-link"; Attrs !!["to" ==> "/about"]] [str "About"]
                             ]
                             li [Class "nav-item"] [
-                                routerLink [Class "nav-link disabled"; Attrs !!["to" ==> "/contact"]] [str "Contact"]
+                                routerLink [Class "nav-link"; Attrs !!["to" ==> "/contact"]] [str "Contact"]
                             ]
                         ]
                         ul [Class "navbar-nav ml-auto"] [
@@ -54,6 +54,7 @@ comp.render <-
                 routerView ()
             ]
             footer [Class "container"] [
+                hr []
                 p [] [str (sprintf "© %d - FbApp" d.currentTime.Year)]
             ]
         ])
