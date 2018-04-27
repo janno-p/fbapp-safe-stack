@@ -1,0 +1,8 @@
+.app {
+    margin-top: 60px;
+}
+
+.app-content {
+    margin-top: calc(60px + 2em);
+    margin-bottom: 2em;
+}

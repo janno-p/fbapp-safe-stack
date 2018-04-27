@@ -13,8 +13,13 @@ type RouterMode =
     | History
     | Abstract
 
+type VNodeData =
+    | Key of U2<string, int>
+    | Slot of string
+    | Class of obj
+    | Attrs of obj
+
 type VNode = obj
-type VNodeData = obj
 type VNodeChildren = obj
 type CreateElement = Func<string, VNodeData, VNode[], VNode>
 type AsyncComponent = obj
