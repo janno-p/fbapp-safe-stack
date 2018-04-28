@@ -1,12 +1,11 @@
 module FbApp.Components.Home
 
+open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Helpers.Vue
 
-let Vue: Vue = importDefault "vue"
-
-let comp = createEmpty<ComponentOptions>
+let private comp = createEmpty<ComponentOptions>
 
 comp.render <-
     (fun h ->
@@ -29,3 +28,6 @@ comp.render <-
                 ]
             ]
         ])
+
+[<ExportDefault>]
+let exports = comp

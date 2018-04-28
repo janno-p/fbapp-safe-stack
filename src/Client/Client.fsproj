@@ -9,6 +9,8 @@
     <Compile Include="Fable.Helpers.Vue.fs" />
     <Compile Include="Client.fs" />
     <Compile Include="Home.fs" />
+    <Compile Include="Dashboard.fs" />
+    <Compile Include="Messages.fs" />
     <Compile Include="App.fs" />
     <Compile Include="Router.fs" />
     <Compile Include="Main.fs" />
