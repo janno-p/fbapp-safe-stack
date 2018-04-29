@@ -1,4 +1,5 @@
 group Server
+    dotnet-saturn
     Fable.Remoting.Giraffe
     FSharp.Core
     Microsoft.AspNetCore.Antiforgery

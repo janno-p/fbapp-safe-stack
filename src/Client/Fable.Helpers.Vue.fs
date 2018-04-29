@@ -2,6 +2,7 @@ module Fable.Helpers.Vue
 
 open Fable.Core
 open Fable.Core.JsInterop
+open Fable.Import
 open Fable.Import.Vue
 
 let [<Emit("$0")>] str (s: string): VNode = unbox s
@@ -15,6 +16,7 @@ let inline com (comp: ComponentOptions) =
 let inline domEl (tag: string) (props: VNodeData list) (children: VNode list): VNode =
     createElement !^ tag (keyValueList CaseRules.LowerFirst props) (children |> Array.ofList)
 
+let inline a b c = domEl "a" b c
 let inline button b c = domEl "button" b c
 let inline div b c = domEl "div" b c
 let inline footer b c = domEl "footer" b c
@@ -31,3 +33,17 @@ let inline routerLink b c = domEl "router-link" b c
 let inline routerView () = domEl "router-view" [] []
 
 let (!!) = createObj
+
+let toComputed (o: obj) =
+    let computed = obj()
+    let proto = JS.Object.getPrototypeOf o
+    for k in JS.Object.getOwnPropertyNames proto do
+        let prop = JS.Object.getOwnPropertyDescriptor(proto, k)
+        match k, prop.value with
+        | _, None ->
+            computed?(k) <- createObj [
+                "get" ==> prop?get
+                "set" ==> prop?set
+            ]
+        | _ -> ()
+    computed

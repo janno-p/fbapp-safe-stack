@@ -627,6 +627,9 @@ GROUP Server
 STORAGE: NONE
 NUGET
   remote: https://api.nuget.org/v3/index.json
+    dotnet-saturn (0.4.2) - clitool: true
+      FSharp.Core (>= 4.2.3) - restriction: >= netcoreapp2.0
+      Microsoft.NETCore.App (>= 2.0) - restriction: >= netcoreapp2.0
     Fable.Remoting.Giraffe (2.6)
       Fable.Remoting.Json (>= 2.0) - restriction: >= netstandard2.0
       Fable.Remoting.Server (>= 3.5) - restriction: >= netstandard2.0

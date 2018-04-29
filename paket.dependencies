@@ -12,6 +12,7 @@ group Server
 
     clitool Microsoft.DotNet.Watcher.Tools
     clitool Microsoft.Extensions.SecretManager.Tools
+    clitool dotnet-saturn
 
 group Client
     storage: none

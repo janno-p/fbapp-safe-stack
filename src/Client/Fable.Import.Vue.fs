@@ -22,6 +22,7 @@ type VNodeData =
     | NativeOn of obj
     | Props of obj
     | DomProps of obj
+    | Style of obj
 
 type VNode = obj
 type VNodeChildren = obj
@@ -40,6 +41,7 @@ type VueConfiguration =
     abstract keyCodes: Dictionary<string, U2<int, int[]>> with get, set
 
 and ComponentOptions =
+    abstract computed: obj with get, set
     abstract data: (unit -> obj) with get, set
     abstract el: U2<Element, string> with get, set
     abstract name: string with get, set

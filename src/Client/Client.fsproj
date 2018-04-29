@@ -7,6 +7,7 @@
     <Compile Include="..\Shared\Shared.fs" />
     <Compile Include="Fable.Import.Vue.fs" />
     <Compile Include="Fable.Helpers.Vue.fs" />
+    <Compile Include="Components\Navigation.fs" />
     <Compile Include="Client.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Dashboard.fs" />
@@ -14,6 +15,9 @@
     <Compile Include="App.fs" />
     <Compile Include="Router.fs" />
     <Compile Include="Main.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="paket.references" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
