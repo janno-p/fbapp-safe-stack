@@ -23,7 +23,8 @@ comp.render <-
             nav [Class "navbar navbar-expand-lg navbar-dark bg-dark fixed-top"] [
                 div [Class "container"] [
                     routerLink [Class "navbar-brand"; Attrs !!["to" ==> "/"]] [
-                        str "Ennustusmäng"
+                        i [Class "fas fa-futbol"] []
+                        span [DomProps !!["innerHTML" ==> "&nbsp;Ennustusmäng"]] []
                     ]
                     button [Class "navbar-toggler"; Attrs !!["type" ==> "button"; "data-toggle" ==> "collapse"; "data-target" ==> "#navbarSupportedContent"; "aria-controls" ==> "navbarSupportedContent"; "aria-expanded" ==> "false"; "aria-label" ==> "Toggle navigation"]] [
                         span [Class "navbar-toggler-icon"] []
@@ -55,6 +56,6 @@ comp.render <-
             ]
             footer [Class "container"] [
                 hr []
-                p [] [str (sprintf "© %d - FbApp" d.currentTime.Year)]
+                p [] [str <| sprintf "FbApp, %d" d.currentTime.Year]
             ]
         ])

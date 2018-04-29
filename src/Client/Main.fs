@@ -14,4 +14,4 @@ appOptions.el <- !^ "#app"
 appOptions.router <- router
 appOptions.render <- (fun h -> com App.comp)
 
-Vue.Create(appOptions) |> ignore
+let app = Vue.Create(appOptions)

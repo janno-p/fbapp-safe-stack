@@ -1,4 +1,5 @@
 .fake/
+.idea/
 obj/
 bin/
 packages/
@@ -6,3 +7,4 @@ paket-files/
 node_modules/
 src/Client/public/
 *.pfx
+*.user

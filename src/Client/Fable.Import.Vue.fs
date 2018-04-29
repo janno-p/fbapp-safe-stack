@@ -21,6 +21,7 @@ type VNodeData =
     | On of obj
     | NativeOn of obj
     | Props of obj
+    | DomProps of obj
 
 type VNode = obj
 type VNodeChildren = obj
