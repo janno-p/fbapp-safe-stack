@@ -2,7 +2,7 @@ module Fable.Helpers.Vue
 
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
+open Fable.Import.Vue
 
 let [<Emit("$0")>] str (s: string): VNode = unbox s
 

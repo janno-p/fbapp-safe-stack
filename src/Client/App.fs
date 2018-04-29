@@ -1,8 +1,8 @@
 module FbApp.Client.App
 
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.Vue
+open Fable.Import.Vue
 
 type AppData =
     abstract currentTime: System.DateTime with get, set
@@ -51,9 +51,11 @@ comp.render <-
                     ]
                 ]
             ]
+
             div [Class "container app-content"] [
                 routerView ()
             ]
+
             footer [Class "container"] [
                 hr []
                 p [] [str <| sprintf "FbApp, %d" d.currentTime.Year]

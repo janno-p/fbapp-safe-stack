@@ -1,4 +1,4 @@
-namespace Fable.Import
+namespace Fable.Import.Vue
 
 open Fable.Core
 open Fable.Import.Browser

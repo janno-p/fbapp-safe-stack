@@ -1,8 +1,8 @@
 module FbApp.Client.Main
 
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.Vue
+open Fable.Import.Vue
 open FbApp.Client.Router
 
 let Vue: Vue = importDefault "vue"

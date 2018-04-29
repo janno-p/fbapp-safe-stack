@@ -1,7 +1,5 @@
 module Client
 
-open Fable.Core.JsInterop
-open Fable.Import
 open Shared
 
 module Server = 
@@ -11,5 +9,3 @@ module Server =
         Proxy.remoting<ICounterProtocol> {
             use_route_builder Route.builder
         }
-
-let Vue: Vue = importDefault "vue"
