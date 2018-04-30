@@ -27,7 +27,9 @@ console.log("Bundling for " + mode + "...");
 module.exports = {
   mode: mode,
   devtool: "source-map",
-  entry: resolve('./Client.fsproj'),
+  entry: {
+    bundle: resolve('./Client.fsproj')
+  },
   output: {
     path: resolve('./public/'),
     publicPath: "/public/",
@@ -36,7 +38,7 @@ module.exports = {
   resolve: {
     modules: [ resolve("../../node_modules/")]
   },
-  devServer: {
+  /*devServer: {
     proxy: {
       '/api/*': {
         target: 'http://localhost:' + port,
@@ -45,7 +47,7 @@ module.exports = {
     },
     hot: true,
     inline: true
-  },
+  },*/
   module: {
     rules: [
       {
@@ -69,7 +71,7 @@ module.exports = {
     ]
   },
   plugins : isProduction ? [] : [
-      new webpack.HotModuleReplacementPlugin(),
+      //new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin()
   ]
 };

@@ -8,9 +8,11 @@ open Microsoft.AspNetCore.Authentication.OAuth
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Hosting
+open Microsoft.AspNetCore.SpaServices.Webpack
 open Microsoft.Extensions.Configuration
-open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Configuration.UserSecrets
+open Microsoft.Extensions.DependencyInjection
+open Microsoft.Extensions.FileProviders
 open System.IO
 open System.Security.Claims
 open System.Threading.Tasks
@@ -23,9 +25,38 @@ open Fable.Remoting.Giraffe
 open Shared
 open FbApp.Server
 open FbApp.Server.HttpsConfig
+open Giraffe
 
 [<assembly: UserSecretsIdAttribute("d6072641-6e1a-4bbc-bbb6-d355f0e38db4")>]
 do ()
+
+module Views =
+    open Giraffe.GiraffeViewEngine
+
+    let index =
+        html [_lang "en"] [
+            head [] [
+                meta [_charset "utf-8"]
+                meta [_httpEquiv "X-UA-Compatible"; _content "IE=edge"]
+                meta [_name "format-detection"; _content "telephone=no"]
+                meta [_name "msapplication-tap-highlight"; _content "no"]
+                meta [_name "viewport"; _content "user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"]
+
+                title [] [rawText "FbApp (SAFE Stack)"]
+
+                link [_rel "stylesheet"; _href "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"; _type "text/css"]
+                link [_rel "stylesheet"; _href "https://use.fontawesome.com/releases/v5.0.4/css/all.css"]
+                link [_rel "stylesheet"; _href "https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"; attr "integrity" "sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"; attr "crossorigin" "anonymous"]
+                link [_rel "stylesheet"; _href "/Styles/main.css"]
+                link [_rel "icon"; _type "image/x-icon"; _href "/Images/safe_favicon.png"]
+                link [_rel "shortcut icon"; _type "image/png"; _href "/Images/safe_favicon.png"]
+            ]
+            body [] [
+                noscript [] [rawText "This is your fallback content in case JavaScript fails to load."]
+                div [_id "app"] []
+                script [_src "/public/bundle.js"] []
+            ]
+        ]
 
 let clientPath = Path.Combine("..", "Client") |> Path.GetFullPath
 
@@ -52,7 +83,7 @@ let logout: HttpHandler =
 let getInitCounter () : Task<Counter> = task { return 42 }
 
 let browserRouter = scope {
-    get Urls.index (htmlFile (Path.Combine(clientPath, "index.html")))
+    get Urls.index (htmlView Views.index)//(htmlFile (Path.Combine(clientPath, "index.html")))
     get Urls.login googleAuth
     get Urls.logout logout
 }
@@ -134,11 +165,23 @@ let configureAppConfiguration (context: WebHostBuilderContext) (config: IConfigu
 let app = application {
     router mainRouter
     memory_cache
-    //use_static clientPath
     use_gzip
 
     app_config (fun app ->
-        app.UseAuthentication()
+        let env = app.ApplicationServices.GetRequiredService<IHostingEnvironment>()
+
+        if env.IsDevelopment() then
+            app.UseWebpackDevMiddleware(
+                    WebpackDevMiddlewareOptions(
+                        HotModuleReplacement = true,
+                        ConfigFile = "./src/Client/webpack.config.js",
+                        ProjectPath = Path.Combine(__SOURCE_DIRECTORY__, "..", "..")))
+
+        app.UseStaticFiles(
+                new StaticFileOptions(
+                    FileProvider = new PhysicalFileProvider(clientPath),
+                    RequestPath = PathString.Empty))
+           .UseAuthentication()
     )
 
     host_config (fun host ->

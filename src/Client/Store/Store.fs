@@ -1,4 +1,4 @@
-module FbApp.Store
+module FbApp.Store.Store
 
 open Fable.Core.JsInterop
 open Fable.Import.Vue
