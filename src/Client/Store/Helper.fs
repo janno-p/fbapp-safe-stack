@@ -1,9 +1,8 @@
-module FbApp.Store.Helper
+module FbApp.Client.Store.Helper
 
 open Fable.Core.JsInterop
 open Fable.Import.JS
 open Fable.Import.Vue
-open System.Collections.Generic
 
 let useRootNamespace = createObj ["root" ==> true]
 

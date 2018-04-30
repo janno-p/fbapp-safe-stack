@@ -1,8 +1,8 @@
-module FbApp.Store.User
+module FbApp.Client.Store.User
 
 open Fable.Core.JsInterop
 open Fable.Import.Vue
-open FbApp.Store.Helper
+open Helper
 
 type UserState () =
     member val isAuthenticated = false with get, set

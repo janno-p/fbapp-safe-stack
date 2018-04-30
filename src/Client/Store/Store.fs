@@ -1,8 +1,8 @@
-module FbApp.Store.Store
+module FbApp.Client.Store.Store
 
 open Fable.Core.JsInterop
 open Fable.Import.Vue
-open FbApp.Store.User
+open User
 
 let Vue: Vue = importDefault "vue"
 let Vuex: Vuex = importDefault "vuex"

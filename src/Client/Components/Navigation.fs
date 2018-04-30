@@ -1,9 +1,9 @@
-module FbApp.Components.Navigation
+module FbApp.Client.Components.Navigation
 
 open Fable.Core.JsInterop
 open Fable.Helpers.Vue
 open Fable.Import.Vue
-open FbApp.Store.User
+open FbApp.Client.Store.User
 open Shared
 
 type NavigationComputed () =

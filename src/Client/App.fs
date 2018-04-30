@@ -20,7 +20,7 @@ comp.render <-
     (fun h ->
         let d = jsThis<AppData>
         div [Class "app"] [
-            com FbApp.Components.Navigation.comp
+            com FbApp.Client.Components.Navigation.comp
 
             div [Class "container app-content"] [
                 routerView ()

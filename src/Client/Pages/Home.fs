@@ -1,4 +1,4 @@
-module FbApp.Components.Home
+module FbApp.Client.Pages.Home
 
 open Fable.Core
 open Fable.Core.JsInterop

@@ -15,21 +15,21 @@ options.routes <-
     [|
         (
             let r = createEmpty<RouteConfig>
-            r.component' <- (fun () -> importDynamic "./Home.fs")
+            r.component' <- (fun () -> importDynamic "./Pages/Home.fs")
             r.path <- "/"
             r
         )
 
         (
             let r = createEmpty<RouteConfig>
-            r.component' <- (fun () -> importDynamic "./Dashboard.fs")
+            r.component' <- (fun () -> importDynamic "./Pages/Dashboard.fs")
             r.path <- "/dashboard"
             r
         )
 
         (
             let r = createEmpty<RouteConfig>
-            r.component' <- (fun () -> importDynamic "./Messages.fs")
+            r.component' <- (fun () -> importDynamic "./Pages/Messages.fs")
             r.path <- "/about"
             r.alias <- !^ "/contact"
             r

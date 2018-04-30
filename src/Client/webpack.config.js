@@ -3,19 +3,22 @@ var webpack = require("webpack");
 var fableUtils = require("fable-utils");
 
 function resolve(filePath) {
-  return path.join(__dirname, filePath)
+    return path.join(__dirname, filePath)
 }
 
 var babelOptions = fableUtils.resolveBabelOptions({
-  presets: [
-    ["env", {
-      "targets": {
-        "browsers": ["last 2 versions"]
-      },
-      "modules": false
-    }]
-  ],
-  plugins: ["transform-runtime"]
+    presets: [
+        [
+            "env",
+            {
+                "targets": {
+                    "browsers": ["last 2 versions"]
+                },
+                "modules": false
+            }
+        ]
+    ],
+    plugins: ["transform-runtime"]
 });
 
 
@@ -25,53 +28,42 @@ var mode = isProduction ? "production" : "development";
 console.log("Bundling for " + mode + "...");
 
 module.exports = {
-  mode: mode,
-  devtool: "source-map",
-  entry: {
-    bundle: resolve('./Client.fsproj')
-  },
-  output: {
-    path: resolve('./public/'),
-    publicPath: "/public/",
-    filename: "bundle.js"
-  },
-  resolve: {
-    modules: [ resolve("../../node_modules/")]
-  },
-  /*devServer: {
-    proxy: {
-      '/api/*': {
-        target: 'http://localhost:' + port,
-        changeOrigin: true
-      }
+    mode: mode,
+    devtool: "source-map",
+    entry: {
+        bundle: resolve('./Client.fsproj')
     },
-    hot: true,
-    inline: true
-  },*/
-  module: {
-    rules: [
-      {
-        test: /\.fs(x|proj)?$/,
-        use: {
-          loader: "fable-loader",
-          options: {
-            babel: babelOptions,
-            define: isProduction ? [] : ["DEBUG"]
-          }
-        }
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: babelOptions
-        },
-      }
+    output: {
+        path: resolve('./public/'),
+        publicPath: "/public/",
+        filename: "bundle.js"
+    },
+    resolve: {
+        modules: [ resolve("../../node_modules/")]
+    },
+    module: {
+        rules: [
+            {
+                test: /\.fs(x|proj)?$/,
+                use: {
+                    loader: "fable-loader",
+                    options: {
+                        babel: babelOptions,
+                        define: isProduction ? [] : ["DEBUG"]
+                    }
+                }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: babelOptions
+                },
+            }
+        ]
+    },
+    plugins : isProduction ? [] : [
+        new webpack.NamedModulesPlugin()
     ]
-  },
-  plugins : isProduction ? [] : [
-      //new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin()
-  ]
 };
