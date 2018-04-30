@@ -13,5 +13,6 @@ let private appOptions = createEmpty<ComponentOptions>
 appOptions.el <- !^ "#app"
 appOptions.router <- router
 appOptions.render <- (fun h -> com App.comp)
+appOptions.store <- FbApp.Store.store |> unbox
 
 let app = Vue.Create(appOptions)

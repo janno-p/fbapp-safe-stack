@@ -3,19 +3,17 @@ module FbApp.Components.Navigation
 open Fable.Core.JsInterop
 open Fable.Helpers.Vue
 open Fable.Import.Vue
-
-// import Api from "../store/api";
-// import user from "../store/user";
+open FbApp.Store.User
+open Shared
 
 type NavigationComputed () =
     member __.isAuthenticated
-        with get() = true // user.state.isAuthenticated
-    member __.signInUri
-        with get() = "" // Api.url(`Account/Login?redirectUri=${this.$route.fullPath}`)
-    member __.signOutUri
-        with get() = "" // Api.url("Account/Logout")
+        with get() = user.state.isAuthenticated
+    member this.signInUri
+        with get() = let vm = this |> unbox<Vue> in sprintf "%s?redirectUri=%s" Urls.login vm.``$route``.fullPath
 
 let comp = createEmpty<ComponentOptions>
+comp.name <- "Navigation"
 comp.computed <- NavigationComputed() |> toComputed
 comp.render <-
     (fun h ->
@@ -50,13 +48,13 @@ comp.render <-
                                 ]
                             ]
                             yield li [Class "nav-item"; Style "margin-left: 1rem;"] [
-                                a [Class "nav-link"; Props !!["href" ==> c.signOutUri]; Attrs !!["title" ==> "Logi välja"]] [
+                                a [Class "nav-link"; Attrs !!["href" ==> Urls.logout; "title" ==> "Logi välja"]] [
                                     i [Class "fas fa-sign-out-alt"] []
                                 ]
                             ]
                         else
                             yield li [Class "nav-item"] [
-                                a [Class "nav-link"; Props !!["href" ==> c.signInUri]; Attrs !!["title" ==> "Logi sisse kasutades oma Google kontot"]] [
+                                a [Class "nav-link"; Attrs !!["href" ==> c.signInUri; "title" ==> "Logi sisse kasutades oma Google kontot"]] [
                                     i [Class "fab fa-google"] []
                                     span [DomProps !!["innerHTML" ==> "&nbsp; Logi sisse"]] []
                                 ]

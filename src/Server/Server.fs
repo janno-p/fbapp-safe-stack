@@ -29,11 +29,6 @@ do ()
 
 let clientPath = Path.Combine("..", "Client") |> Path.GetFullPath
 
-module Urls =
-    let index = "/"
-    let login = "/login"
-    let logout = "/logout"
-
 let challenge (scheme: string) (redirectUri: string) : HttpHandler =
     fun (next: HttpFunc) (ctx: HttpContext) ->
         task {

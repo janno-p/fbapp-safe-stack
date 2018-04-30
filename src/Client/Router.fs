@@ -9,6 +9,8 @@ let VueRouter: VueRouter = importDefault "vue-router"
 Vue.Use(VueRouter)
 
 let private options = createEmpty<RouterOptions>
+options.linkExactActiveClass <- "active"
+options.mode <- RouterMode.History
 options.routes <-
     [|
         (

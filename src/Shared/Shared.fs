@@ -2,6 +2,11 @@ namespace Shared
 
 type Counter = int
 
+module Urls =
+    let index = "/"
+    let login = "/login"
+    let logout = "/logout"
+
 module Route =
     /// Defines how routes are generated on server and mapped from client
     let builder typeName methodName = 
