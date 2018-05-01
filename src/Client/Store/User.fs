@@ -4,14 +4,17 @@ open Fable.Core.JsInterop
 open Fable.Import.Vue
 open Helper
 
-type UserState () =
-    member val isAuthenticated = false with get, set
+type UserState =
+    abstract isAuthenticated: bool with get, set
+
+let private initialState = createEmpty<UserState>
+initialState.isAuthenticated <- false
 
 type IRootState =
     interface
     end
 
-let private b = DynamicModuleBuilder<UserState, IRootState>("user", UserState())
+let private b = DynamicModuleBuilder<UserState, IRootState>("user", initialState)
 
 let private setAuthenticated =
     System.Action<_,_>(

@@ -11,7 +11,7 @@ const bundleRenderer = createBundleRenderer(path.join(__dirname, "public/vue-ssr
 module.exports = createServerRenderer((params) => {
     return new Promise((resolve, reject) => {
         const context = {
-            baseUrl: `http://${params.data.request.host.value}`,
+            baseUrl: `http://${params.data.request.host}`,
             isAuthenticated: params.data.isAuthenticated,
             request: params.data.request,
             state: {},
