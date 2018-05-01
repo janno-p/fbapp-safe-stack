@@ -33,7 +33,7 @@ do ()
 module Views =
     open Giraffe.GiraffeViewEngine
 
-    let index =
+    let index node =
         html [_lang "en"] [
             head [] [
                 meta [_charset "utf-8"]
@@ -53,8 +53,8 @@ module Views =
             ]
             body [] [
                 noscript [] [rawText "This is your fallback content in case JavaScript fails to load."]
-                div [_id "app"] []
-                script [_src "/public/bundle.js"] []
+                node
+                script [_src "/public/client-bundle.js"] []
             ]
         ]
 
@@ -82,8 +82,20 @@ let logout: HttpHandler =
 
 let getInitCounter () : Task<Counter> = task { return 42 }
 
+let index: HttpHandler =
+    fun (next: HttpFunc) (ctx: HttpContext) ->
+        task {
+            let! result = ctx |> Prerendering.prerender "../Client/renderOnServer" ""
+            match result with
+            | Prerendering.PrerenderResult.Content (statusCode, node) ->
+                statusCode |> Option.iter (fun code -> ctx.Response.StatusCode <- code)
+                return! htmlView (Views.index node) next ctx
+            | Prerendering.PrerenderResult.Redirect redirectUrl ->
+                return! redirectTo false redirectUrl next ctx
+        }
+
 let browserRouter = scope {
-    get Urls.index (htmlView Views.index)//(htmlFile (Path.Combine(clientPath, "index.html")))
+    get Urls.index index
     get Urls.login googleAuth
     get Urls.logout logout
 }

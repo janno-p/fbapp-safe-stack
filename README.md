@@ -35,4 +35,4 @@ Windows:
 > build.cmd run
 ```
 
-Open browser at [http://localhost:8080](http://localhost:8080).
+Open browser at [https://localhost:5001](https://localhost:5001).

@@ -18,3 +18,13 @@ module Route =
 type ICounterProtocol = {
     getInitCounter : unit -> Async<Counter>
 }
+
+type ICookie =
+    abstract key: string with get, set
+    abstract value: string with get, set
+
+type IRequest = {
+    cookies: ICookie[]
+    headers: System.Collections.Generic.Dictionary<string, string[]>
+    host: string
+}
