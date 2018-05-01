@@ -1,10 +1,17 @@
 module FbApp.Client.Store.Helper
 
+open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import.JS
 open Fable.Import.Vue
 
 let useRootNamespace = createObj ["root" ==> true]
+
+[<Emit("$0 === undefined")>]
+let isUndefined (x: 'a) : bool = jsNative
+
+[<Emit("$0 !== undefined")>]
+let isDefined (x: 'a) : bool = jsNative
 
 let qualifyKey (namespaceName: string) (key: string) =
      createObj [
@@ -13,9 +20,9 @@ let qualifyKey (namespaceName: string) (key: string) =
      ]
 
 type DynamicModuleBuilder<'S, 'R> (moduleNamespace: string, initialState: 'S) =
-    let getters = GetterTree<'S, 'R>()
-    let mutations = MutationTree<'S>()
-    let actions = ActionTree<'S, 'R>()
+    let getters = createEmpty<GetterTree<'S, 'R>>
+    let mutations = createEmpty<MutationTree<'S>>
+    let actions = createEmpty<ActionTree<'S, 'R>>
     let mutable vuexStore = Option<Store<'R>>.None
     let mutable vuexModule = Option<Module<'S, 'R>>.None
 
@@ -35,27 +42,27 @@ type DynamicModuleBuilder<'S, 'R> (moduleNamespace: string, initialState: 'S) =
         let (key: string), (namespacedKey: string) =
             let x = qualifyKey moduleNamespace name
             x?key |> unbox, x?namespacedKey |> unbox
-        if mutations.ContainsKey(key) then
+        if mutations?(key) |> isDefined then
             failwithf "There is already a mutation named %s." key
-        mutations.Add(key, handler |> unbox<Mutation<'S>>)
+        mutations?(key) <- handler |> unbox<Mutation<'S>>
         (fun payload -> vuexStore.Value.commit(namespacedKey, payload, useRootNamespace |> unbox<CommitOptions>))
 
     member __.dispatch(handler: ActionHandler<'S, 'R, 'P, 'T>, name: string): ('P -> Promise<'T>) =
         let (key: string), (namespacedKey: string) =
             let x = qualifyKey moduleNamespace name
             x?key |> unbox, x?namespacedKey |> unbox
-        if actions.ContainsKey(key) then
+        if actions?(key) |> isDefined then
             failwithf "There is already an action named %s." key
-        actions.Add(key, handler |> unbox<Action<'S, 'R>>)
+        actions?(key) <- handler |> unbox<Action<'S, 'R>>
         (fun payload -> vuexStore.Value.dispatch(namespacedKey, payload, useRootNamespace |> unbox<DispatchOptions>))
 
     member __.read(handler: GetterHandler<'S, 'R, 'T>, name: string): (unit -> 'T) =
         let (key: string), (namespacedKey: string) =
             let x = qualifyKey moduleNamespace name
             x?key |> unbox, x?namespacedKey |> unbox
-        if getters.ContainsKey(key) then
+        if getters?(key) |> isDefined then
             failwithf "There is already an getter named %s." key
-        getters.Add(key, handler |> unbox<Getter<'S, 'R>>)
+        getters?(key) <- handler |> unbox<Getter<'S, 'R>>
         (fun () -> vuexStore.Value.getters?(namespacedKey) |> unbox<'T>)
 
     member __.register(store: Store<'R>) =
@@ -65,9 +72,9 @@ type DynamicModuleBuilder<'S, 'R> (moduleNamespace: string, initialState: 'S) =
         if vuexModule.IsNone then
             vuexModule <- Some(
                 createObj [
-                    "actions" ==> (fun _ -> actions)
-                    "getters" ==> (fun _ -> getters)
-                    "mutations" ==> (fun _ -> mutations)
+                    "actions" ==> actions
+                    "getters" ==> getters
+                    "mutations" ==> mutations
                     "namespaced" ==> true
                     "state" ==> initialState
                 ] |> unbox

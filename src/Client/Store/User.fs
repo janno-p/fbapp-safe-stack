@@ -20,10 +20,12 @@ let private setAuthenticated =
     )
 
 let private stateGetter = b.state()
+let private commitSetAuthenticated = b.commit(setAuthenticated, "setAuthenticated")
+let private registerModule = b.register
 
 type UserModule () =
     member __.state with get() = stateGetter()
-    member val commitSetAuthenticated = b.commit(setAuthenticated, "setAuthenticated")
-    member __.registerModule(store) = b.register(store)
+    member __.commitSetAuthenticated with get() = commitSetAuthenticated
+    member __.registerModule with get() = registerModule
 
 let user = UserModule()
