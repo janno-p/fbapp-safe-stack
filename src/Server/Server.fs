@@ -54,7 +54,7 @@ module Views =
             body [] [
                 noscript [] [rawText "This is your fallback content in case JavaScript fails to load."]
                 node
-                script [_src "/public/client-bundle.js"] []
+                script [_src "/public/bundle.js"] []
             ]
         ]
 
@@ -82,10 +82,19 @@ let logout: HttpHandler =
 
 let getInitCounter () : Task<Counter> = task { return 42 }
 
+type IndexModel = {
+    isAuthenticated: bool
+    request: IRequest
+}
+
 let index: HttpHandler =
     fun (next: HttpFunc) (ctx: HttpContext) ->
         task {
-            let! result = ctx |> Prerendering.prerender "../Client/renderOnServer" ""
+            let model = {
+                isAuthenticated = ctx.User.Identity.IsAuthenticated
+                request = ctx.Request |> HttpRequest.getRequestData
+            }
+            let! result = ctx |> Prerendering.prerender "../Client/render-on-server" model
             match result with
             | Prerendering.PrerenderResult.Content (statusCode, node) ->
                 statusCode |> Option.iter (fun code -> ctx.Response.StatusCode <- code)

@@ -3,6 +3,7 @@ namespace FbApp.Server
 open Microsoft.AspNetCore.Antiforgery
 open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
+open Shared
 
 module XsrfToken =
     let [<Literal>] CookieName = "XSRF-TOKEN"
@@ -14,17 +15,11 @@ module XsrfToken =
         context.Response.Cookies.Append(CookieName, tokens.RequestToken, CookieOptions(HttpOnly = true))
 
 module HttpRequest =
-    type RequestData = {
-        Cookies: IRequestCookieCollection
-        Headers: IHeaderDictionary
-        Host: HostString
-    }
-
-    let getRequestData (request: HttpRequest) = {
-        Cookies = request.Cookies
-        Headers = request.Headers
-        Host = request.Host
-    }
+    let getRequestData (request: HttpRequest) =
+        { cookies = request.Cookies |> Seq.map (fun x -> x.Key, x.Value) |> dict
+          headers = request.Headers |> Seq.map (fun x -> x.Key, x.Value.ToArray()) |> dict
+          host = request.Host.ToString()
+        }
 
 module HttpsConfig =
     // https://github.com/giraffe-fsharp/Giraffe/blob/master/samples/GoogleAuthApp/GoogleAuthApp/HttpsConfig.fs

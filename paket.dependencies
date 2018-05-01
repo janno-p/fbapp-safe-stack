@@ -27,4 +27,5 @@ group Client
 group Build
     source https://api.nuget.org/v3/index.json
 
+    nuget BouncyCastle
     nuget FAKE

@@ -10,7 +10,8 @@ let Store: Store<IRootState> = import "Store" "vuex"
 
 Vue.Use(Vuex)
 
-let storeOptions = createEmpty<StoreOptions<IRootState>>
-
-let store = Store.Create(storeOptions)
-user.registerModule(store)
+let createStore() =
+    let options = createEmpty<StoreOptions<IRootState>>
+    let store = Store.Create(options)
+    user.registerModule(store)
+    store
