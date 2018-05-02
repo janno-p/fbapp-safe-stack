@@ -51,14 +51,14 @@ function createConfig({ serverSide }) {
         externals = nodeExternals();
         libraryTarget = "commonjs2"
     }
-    
+
     return {
         mode: mode,
         
         devtool: "source-map",
         
         entry: {
-            bundle: serverSide ? resolve("./server.js") : resolve("./Client.fsproj")
+            bundle: serverSide ? resolve("./server.js") : resolve("./client.js")
         },
         
         externals,
@@ -97,6 +97,14 @@ function createConfig({ serverSide }) {
                 {
                     test: /\.json?$/,
                     loader: "json-loader"
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        "style-loader",
+                        "css-loader",
+                        "sass-loader"
+                    ]
                 }
             ]
         },

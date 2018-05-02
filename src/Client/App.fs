@@ -19,7 +19,7 @@ comp.data <-
 comp.render <-
     (fun h ->
         let d = jsThis<AppData>
-        div [Class "app"] [
+        div [Attrs !!["id" ==> "app"]] [
             com FbApp.Client.Components.Navigation.comp
 
             div [Class "container app-content"] [

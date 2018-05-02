@@ -4,7 +4,6 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.Vue
 open Fable.Import.Vue
-open FbApp.Client.Router
 open FbApp.Client.Store.Store
 open FbApp.Client.Store.User
 open Shared
@@ -37,7 +36,6 @@ let createApp (context: IContext) =
     sync.Invoke(store |> unbox, router)
     
     let options = createEmpty<ComponentOptions>
-    options.el <- !^ "#app"
     options.router <- router
     options.render <- (fun h -> com App.comp)
     options.store <- store |> unbox

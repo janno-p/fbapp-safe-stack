@@ -1,17 +1,11 @@
 module FbApp.Client.Store.Helper
 
-open Fable.Core
 open Fable.Core.JsInterop
+open Fable.Helpers.Vue
 open Fable.Import.JS
 open Fable.Import.Vue
 
 let useRootNamespace = createObj ["root" ==> true]
-
-[<Emit("$0 === undefined")>]
-let isUndefined (x: 'a) : bool = jsNative
-
-[<Emit("$0 !== undefined")>]
-let isDefined (x: 'a) : bool = jsNative
 
 let qualifyKey (namespaceName: string) (key: string) =
      createObj [

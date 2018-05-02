@@ -47,3 +47,9 @@ let toComputed (o: obj) =
             ]
         | _ -> ()
     computed
+
+[<Emit("$0 === undefined")>]
+let isUndefined (_x: 'a) : bool = jsNative
+
+[<Emit("$0 !== undefined")>]
+let isDefined (_x: 'a) : bool = jsNative
