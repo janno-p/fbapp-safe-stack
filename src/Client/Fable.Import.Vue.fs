@@ -117,6 +117,7 @@ and Vue =
     abstract ``$router``: VueRouter with get
     [<Emit("$0.$route")>]
     abstract ``$route``: Route with get
+    abstract ``$store``: Store<obj> with get
 
 and ModuleTree<'R> = Dictionary<string, Module<obj, 'R>>
 

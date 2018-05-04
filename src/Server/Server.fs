@@ -25,7 +25,6 @@ open Fable.Remoting.Giraffe
 open Shared
 open FbApp.Server
 open FbApp.Server.HttpsConfig
-open Giraffe
 
 [<assembly: UserSecretsIdAttribute("d6072641-6e1a-4bbc-bbb6-d355f0e38db4")>]
 do ()
@@ -67,7 +66,8 @@ let challenge (scheme: string) (redirectUri: string) : HttpHandler =
             return! next ctx
         }
 
-let googleAuth: HttpHandler = challenge GoogleDefaults.AuthenticationScheme "/"
+let googleAuth: HttpHandler =
+    challenge GoogleDefaults.AuthenticationScheme "/"
 
 let refreshToken: HttpHandler =
     fun (next: HttpFunc) (ctx: HttpContext) -> task {
@@ -90,6 +90,7 @@ type IndexModel = {
 let index: HttpHandler =
     fun (next: HttpFunc) (ctx: HttpContext) ->
         task {
+            ctx |> XsrfToken.refresh
             let model = {
                 isAuthenticated = ctx.User.Identity.IsAuthenticated
                 request = ctx.Request |> HttpRequest.getRequestData
@@ -103,24 +104,20 @@ let index: HttpHandler =
                 return! redirectTo false redirectUrl next ctx
         }
 
-let browserRouter = scope {
-    get Urls.index index
-    get Urls.login googleAuth
-    get Urls.logout logout
-}
-
 let server = {
     getInitCounter = getInitCounter >> Async.AwaitTask
 }
 
-let webApp =
+let apiRouter =
     remoting server {
         use_route_builder Route.builder
     }
 
 let mainRouter = scope {
-    forward "" browserRouter
-    forward "" webApp
+    not_found_handler index
+    get Urls.login googleAuth
+    get Urls.logout logout
+    forward "/api" apiRouter
 }
 
 let endpoints = [

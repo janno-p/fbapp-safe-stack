@@ -11,8 +11,7 @@ let private initialState = createEmpty<UserState>
 initialState.isAuthenticated <- false
 
 type IRootState =
-    interface
-    end
+    abstract route: Route with get
 
 let private b = DynamicModuleBuilder<UserState, IRootState>("user", initialState)
 
