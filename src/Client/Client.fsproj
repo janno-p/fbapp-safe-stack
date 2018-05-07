@@ -12,15 +12,19 @@
     <Compile Include="Store\User.fs" />
     <Compile Include="Store\Store.fs" />
     <Compile Include="Components\Navigation.fs" />
+    <Content Include="Images\safe_favicon.png" />
     <Compile Include="Pages\Home.fs" />
     <Compile Include="Pages\Dashboard.fs" />
     <Compile Include="Pages\Messages.fs" />
+    <Content Include="Styles\main.css" />
+    <None Include="Styles\nprogress.scss" />
     <Compile Include="App.fs" />
     <Compile Include="Router.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="paket.references" />
+    <None Include="client.js" />
     <Content Include="render-on-server.js" />
     <Content Include="server.js" />
     <Content Include="webpack.config.js" />

@@ -1,5 +1,6 @@
 .fake/
 .idea/
+.vs/
 obj/
 bin/
 packages/
