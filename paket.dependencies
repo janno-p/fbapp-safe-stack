@@ -1,3 +1,7 @@
+source https://api.nuget.org/v3/index.json
+storage: none
+clitool dotnet-fake
+
 group Server
     storage: none
     source https://api.nuget.org/v3/index.json
@@ -25,7 +29,9 @@ group Client
     clitool dotnet-fable
 
 group Build
+    storage: none
     source https://api.nuget.org/v3/index.json
 
     nuget BouncyCastle
-    nuget FAKE prerelease
+    nuget Fake.Core.Target
+    nuget Fake.DotNet.Cli

@@ -1,5 +1,5 @@
-#r @"packages/build/FAKE/tools/FakeLib.dll"
-#r @"packages/build/BouncyCastle/lib/BouncyCastle.Crypto"
+#r "paket: groupref build //"
+#load "./.fake/build.fsx/intellisense.fsx"
 
 open Fake.Core
 open Fake.Core.TargetOperators
