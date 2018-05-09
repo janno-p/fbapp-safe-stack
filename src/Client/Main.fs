@@ -37,7 +37,7 @@ let createApp (context: IContext) =
     
     let options = createEmpty<ComponentOptions>
     options.router <- router
-    options.render <- (fun h -> com App.comp)
+    options.render <- (fun h -> routerView ())
     options.store <- store |> unbox
     
     let app = Vue.Create(options)

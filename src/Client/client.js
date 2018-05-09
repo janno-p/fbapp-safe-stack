@@ -4,6 +4,7 @@ import Vue, { ComponentOptions } from "vue";
 import "noty/src/noty.scss";
 import "noty/src/themes/mint.scss";
 import "./Styles/nprogress.scss"
+import "./Styles/dashboard.scss"
 
 import { createApp } from "./Client.fsproj";
 

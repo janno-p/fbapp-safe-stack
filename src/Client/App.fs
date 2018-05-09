@@ -1,5 +1,6 @@
 module FbApp.Client.App
 
+open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.Vue
 open Fable.Import.Vue
@@ -7,7 +8,7 @@ open Fable.Import.Vue
 type AppData =
     abstract currentTime: System.DateTime with get, set
 
-let comp = createEmpty<ComponentOptions>
+let private comp = createEmpty<ComponentOptions>
 comp.name <- "app"
 
 comp.data <-
@@ -31,3 +32,6 @@ comp.render <-
                 p [] [str <| sprintf "FbApp, %d" d.currentTime.Year]
             ]
         ])
+
+[<ExportDefault>]
+let exports = comp
