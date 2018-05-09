@@ -4,7 +4,7 @@ GROUP Build
 NUGET
   remote: https://api.nuget.org/v3/index.json
     BouncyCastle (1.8.2)
-    FAKE (4.64.13)
+    FAKE (5.0.0-rc011)
 
 GROUP Client
 STORAGE: NONE
