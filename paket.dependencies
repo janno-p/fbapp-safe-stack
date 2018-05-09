@@ -2,7 +2,7 @@ group Server
     storage: none
     source https://api.nuget.org/v3/index.json
 
-    nuget Fable.Remoting.Giraffe ~> 2.6
+    nuget Fable.Remoting.Giraffe
     nuget FSharp.Core
     nuget Microsoft.AspNetCore.Antiforgery
     nuget Microsoft.AspNetCore.Authentication.Google
@@ -20,7 +20,7 @@ group Client
     source https://api.nuget.org/v3/index.json
 
     nuget Fable.Core
-    nuget Fable.Remoting.Client ~> 2.4
+    nuget Fable.Remoting.Client
 
     clitool dotnet-fable
 
